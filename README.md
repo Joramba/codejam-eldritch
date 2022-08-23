@@ -1,3 +1,3 @@
 # codejam-eldritch
 
-#Deploy: https://joramba.github.io/codejam-eldritch/app/
+Deploy: https://joramba.github.io/codejam-eldritch/app/
