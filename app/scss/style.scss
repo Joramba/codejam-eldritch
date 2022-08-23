@@ -139,3 +139,71 @@ body {
 .selected {
     border: red 2px solid;
 }
+
+.stage {
+    &-container {
+        padding: 10px;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    &-text {
+        background-color: white;
+        padding: 5px 10px;
+    }
+
+}
+
+
+
+.dot {
+
+    align-items: center;
+    border-radius: 50%;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    width: 30px;
+
+    &-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    &.green {
+        background-color: green;
+    }
+
+    &.brown {
+        background-color: brown;
+    }
+
+    &.blue {
+        background-color: blue;
+    }
+
+}
+
+.deck {
+    background: url("../assets/mythicCardBackground.png") no-repeat;
+    background-size: cover;
+    height: 190px;
+    width: 130px;
+    cursor: pointer;
+}
+
+.last-card {
+    background-size: cover;
+    height: 190px;
+    width: 130px;
+}
+
+.hidden {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+}

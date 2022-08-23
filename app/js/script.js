@@ -1,9 +1,6 @@
 import ancientsData from "../data/ancients.js";
 import difficulties from "../data/difficulties.js"
 
-console.log(difficulties);
-console.log(ancientsData);
-
 const ancientCards = document.querySelectorAll('.ancient-card'),
     ancientContainer = document.querySelector('.ancient-container'),
     levelButtons = document.querySelectorAll('.difficulty'),
@@ -11,44 +8,76 @@ const ancientCards = document.querySelectorAll('.ancient-card'),
     shuffleButton = document.querySelector('.deck-button'),
     deckContainer = document.querySelector('.deck-container');
 
-ancientCards.forEach((item) => {
+deckContainer.innerHTML = '';
+let ancientId, levelId;
+
+ancientCards.forEach((item, i) => {
     item.addEventListener('click', () => {
         ancientCards.forEach((selected) => {
+            selected.classList.remove('selected');
+        });
+        levelButtons.forEach((selected) => {
             selected.classList.remove('selected')
         });
+        difficultyContainer.classList.remove('select');
         item.classList.add('selected');
+        deckContainer.innerHTML = '';
         ancientContainer.classList.add('select');
+        ancientId = i;
     })
 });
 
-levelButtons.forEach((item) => {
+levelButtons.forEach((item, i) => {
     item.addEventListener('click', () => {
         levelButtons.forEach((selected) => {
             selected.classList.remove('selected')
         });
         item.classList.add('selected');
         difficultyContainer.classList.add('select');
+        levelId = i;
+        deckContainer.appendChild(shuffleButton);
     })
 })
 
-let statusMessage = document.createElement('div');
-statusMessage.style.cssText = `
-margin-top: 15px;
-font-size: 15px;
-color: red;
-`;
-deckContainer.appendChild(statusMessage);
-
 
 shuffleButton.addEventListener('click', () => {
-    if ((ancientContainer.classList.contains('select')) && (difficultyContainer.classList.contains('select'))) {
-        console.log(1);
-        statusMessage.textContent = "";
-    } else if (!(ancientContainer.classList.contains('select'))) {
-        statusMessage.textContent = 'Select the ancient card';
+    const greenCards = ancientsData[ancientId].firstStage.greenCards + ancientsData[ancientId].secondStage.greenCards + ancientsData[ancientId].thirdStage.greenCards;
+    const blueCards = ancientsData[ancientId].firstStage.blueCards + ancientsData[ancientId].secondStage.blueCards + ancientsData[ancientId].thirdStage.blueCards;
+    const brownCards = ancientsData[ancientId].firstStage.brownCards + ancientsData[ancientId].secondStage.brownCards + ancientsData[ancientId].thirdStage.brownCards;
 
-    } else if (!(difficultyContainer.classList.contains('select'))) {
-        statusMessage.textContent = 'Select the level';
-    }
+    deckContainer.innerHTML = `
+        <div class="current-state">
+        <div class="stage-container">
+            <span class="stage-text">First Stage</span>
+            <div class="dot-container">
+                <div class="dot green">${ancientsData[ancientId].firstStage.greenCards}</div>
+                <div class="dot brown">${ancientsData[ancientId].firstStage.brownCards}</div>
+                <div class="dot blue">${ancientsData[ancientId].firstStage.blueCards}</div>
+            </div>
+        </div>
+        <div class="stage-container">
+            <span class="stage-text">Second Stage</span>
+            <div class="dot-container">
+            <div class="dot green">${ancientsData[ancientId].secondStage.greenCards}</div>
+            <div class="dot brown">${ancientsData[ancientId].secondStage.brownCards}</div>
+            <div class="dot blue">${ancientsData[ancientId].secondStage.blueCards}</div>
+            </div>
+        </div>
+        <div class="stage-container">
+            <span class="stage-text">Third Stage</span>
+            <div class="dot-container">
+            <div class="dot green">${ancientsData[ancientId].thirdStage.greenCards}</div>
+            <div class="dot brown">${ancientsData[ancientId].thirdStage.brownCards}</div>
+            <div class="dot blue">${ancientsData[ancientId].thirdStage.blueCards}</div>
+            </div>
+        </div>
+    </div>
+    <div class="deck"></div>
+    <div class="last-card"></div>
+        `;
+
+    console.log(greenCards);
+    console.log(blueCards);
+    console.log(brownCards);
 });
 

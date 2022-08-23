@@ -13,7 +13,7 @@ gulp.task('html', function () {
 
 gulp.task('scss', function () {
     return gulp.src('app/scss/**/*.scss')
-        .pipe(sass({ outputStyle: 'compressed' }))
+        .pipe(sass({ outputStyle: 'compressed' })) //expanded //compressed
         .pipe(rename({
             suffix: '.min'
         }))
