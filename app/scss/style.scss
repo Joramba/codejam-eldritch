@@ -107,6 +107,7 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
     }
 
     &-button {
@@ -133,4 +134,8 @@ body {
         opacity: 0.9;
     }
 
+}
+
+.selected {
+    border: red 2px solid;
 }
