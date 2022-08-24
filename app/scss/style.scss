@@ -31,7 +31,6 @@ body {
     }
 
     &-card {
-        background-size: contain;
         cursor: pointer;
         height: 320px;
         width: 250px;
@@ -41,18 +40,22 @@ body {
 
 .azathoth {
     background: url("../assets/Ancients/Azathoth.png") no-repeat;
+    background-size: cover;
 }
 
 .cthulhu {
     background: url("../assets/Ancients/Cthulthu.png") no-repeat;
+    background-size: cover;
 }
 
 .logsothoth {
     background: url("../assets/Ancients/IogSothoth.png") no-repeat;
+    background-size: cover;
 }
 
 .shubniggurath {
     background: url("../assets/Ancients/ShubNiggurath.png") no-repeat;
+    background-size: cover;
 }
 
 
@@ -203,7 +206,10 @@ body {
 }
 
 .hidden {
-    position: absolute;
     opacity: 0;
     visibility: hidden;
+}
+
+.done {
+    color: red;
 }

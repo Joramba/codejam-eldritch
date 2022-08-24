@@ -1,5 +1,10 @@
 import ancientsData from "../data/ancients.js";
-import difficulties from "../data/difficulties.js"
+import difficulties from "../data/difficulties.js";
+import cardsDataGreen from "../data/mythicCards/green/index.js";
+import cardsDataBrown from "../data/mythicCards/brown/index.js";
+import cardsDataBlue from "../data/mythicCards/blue/index.js";
+
+// import cards from "../assets/MythicCards/green/index.js";
 
 const ancientCards = document.querySelectorAll('.ancient-card'),
     ancientContainer = document.querySelector('.ancient-container'),
@@ -8,13 +13,21 @@ const ancientCards = document.querySelectorAll('.ancient-card'),
     shuffleButton = document.querySelector('.deck-button'),
     deckContainer = document.querySelector('.deck-container');
 
+
 deckContainer.innerHTML = '';
 let ancientId, levelId;
+
 
 function showButton() {
     if (difficultyContainer.classList.contains('select') && ancientContainer.classList.contains('select')) {
         deckContainer.appendChild(shuffleButton);
     }
+}
+
+function getRandom(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 ancientCards.forEach((item, i) => {
@@ -44,10 +57,15 @@ levelButtons.forEach((item, i) => {
 });
 
 shuffleButton.addEventListener('click', () => {
-    console.log(ancientId)
-    const greenCards = ancientsData[ancientId].firstStage.greenCards + ancientsData[ancientId].secondStage.greenCards + ancientsData[ancientId].thirdStage.greenCards;
-    const blueCards = ancientsData[ancientId].firstStage.blueCards + ancientsData[ancientId].secondStage.blueCards + ancientsData[ancientId].thirdStage.blueCards;
-    const brownCards = ancientsData[ancientId].firstStage.brownCards + ancientsData[ancientId].secondStage.brownCards + ancientsData[ancientId].thirdStage.brownCards;
+    const AmountgreenCards = ancientsData[ancientId].firstStage.greenCards + ancientsData[ancientId].secondStage.greenCards + ancientsData[ancientId].thirdStage.greenCards;
+    const AmountblueCards = ancientsData[ancientId].firstStage.blueCards + ancientsData[ancientId].secondStage.blueCards + ancientsData[ancientId].thirdStage.blueCards;
+    const AmountbrownCards = ancientsData[ancientId].firstStage.brownCards + ancientsData[ancientId].secondStage.brownCards + ancientsData[ancientId].thirdStage.brownCards;
+
+
+    // console.log(AmountgreenCards);
+    // console.log(AmountbrownCards);
+    // console.log(AmountblueCards);
+
 
     deckContainer.innerHTML = `
         <div class="current-state">
@@ -80,8 +98,331 @@ shuffleButton.addEventListener('click', () => {
         <div class="last-card"></div>
         `;
 
-    console.log(greenCards);
-    console.log(blueCards);
-    console.log(brownCards);
+    const deck = document.querySelector('.deck');
+    const lastCard = document.querySelector('.last-card');
+    const stage_text = document.querySelectorAll('.stage-text');
+
+    function levelEasy() {
+        console.log("Level easy");
+        let firstStage = [];
+        let secondStage = [];
+        let thirdStage = [];
+
+        let greenEasy = [];
+        let greenNormal = [];
+        let greenHard = [];
+
+        let brownEasy = [];
+        let brownNormal = [];
+        let brownHard = [];
+
+        let blueEasy = [];
+        let blueNormal = [];
+        let blueHard = [];
+
+
+        cardsDataGreen.forEach(item => {
+            if (item.difficulty == 'easy') {
+                greenEasy.push(item.id);
+            }
+            else if (item.difficulty == 'normal') {
+                greenNormal.push(item.id);
+            } else {
+                greenHard.push(item.id);
+            }
+        });
+
+        cardsDataBrown.forEach(item => {
+            if (item.difficulty == 'easy') {
+                brownEasy.push(item.id);
+            }
+            else if (item.difficulty == 'normal') {
+                brownNormal.push(item.id);
+            } else {
+                brownHard.push(item.id);
+            }
+        });
+
+        cardsDataBlue.forEach(item => {
+            if (item.difficulty == 'easy') {
+                blueEasy.push(item.id);
+            }
+            else if (item.difficulty == 'normal') {
+                blueNormal.push(item.id);
+            } else {
+                blueHard.push(item.id);
+            }
+        });
+
+        let greenNeeded = [];
+        let brownNeeded = [];
+        let blueNeeded = [];
+
+
+        if (AmountgreenCards <= greenEasy.length) {
+            const length = AmountgreenCards;
+
+            for (let i = 0; i < length; i++) {
+                let a = getRandom(0, greenEasy.length - 1);
+                greenNeeded.push(greenEasy[a]);
+                greenEasy.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].firstStage.greenCards; i++) {
+                let a = getRandom(0, greenNeeded.length - 1);
+                firstStage.push(greenNeeded[a]);
+                greenNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].secondStage.greenCards; i++) {
+                let a = getRandom(0, greenNeeded.length - 1);
+                secondStage.push(greenNeeded[a]);
+                greenNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].thirdStage.greenCards; i++) {
+                let a = getRandom(0, greenNeeded.length - 1);
+                thirdStage.push(greenNeeded[a]);
+                greenNeeded.splice(a, 1);
+            }
+
+        } else {
+            const length = AmountgreenCards;
+            const dep = AmountgreenCards - greenEasy.length;
+
+            for (let i = 0; i < length - 1; i++) {
+                let a = getRandom(0, greenEasy.length - 1);
+                greenNeeded.push(greenEasy[a]);
+                greenEasy.splice(a, 1);
+            }
+
+            for (let i = 0; i < dep; i++) {
+                let a = getRandom(0, greenNormal.length - 1);
+                greenNeeded.push(greenNormal[a]);
+                greenNormal.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].firstStage.greenCards; i++) {
+                let a = getRandom(0, greenNeeded.length - 1);
+                firstStage.push(greenNeeded[a]);
+                greenNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].secondStage.greenCards; i++) {
+                let a = getRandom(0, greenNeeded.length - 1);
+                secondStage.push(greenNeeded[a]);
+                greenNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].thirdStage.greenCards; i++) {
+                let a = getRandom(0, greenNeeded.length - 1);
+                thirdStage.push(greenNeeded[a]);
+                greenNeeded.splice(a, 1);
+            }
+        }
+
+
+        if (AmountbrownCards <= brownEasy.length) {
+            const length = AmountbrownCards;
+
+            for (let i = 0; i < length; i++) {
+                let a = getRandom(0, brownEasy.length - 1);
+                brownNeeded.push(brownEasy[a]);
+                brownEasy.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].firstStage.brownCards; i++) {
+                let a = getRandom(0, brownNeeded.length - 1);
+                firstStage.push(brownNeeded[a]);
+                brownNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].secondStage.brownCards; i++) {
+                let a = getRandom(0, brownNeeded.length - 1);
+                secondStage.push(brownNeeded[a]);
+                brownNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].thirdStage.brownCards; i++) {
+                let a = getRandom(0, brownNeeded.length - 1);
+                thirdStage.push(brownNeeded[a]);
+                brownNeeded.splice(a, 1);
+            }
+
+
+        } else {
+            let length = brownEasy.length;
+            const dep = AmountbrownCards - brownEasy.length;
+
+            for (let i = 0; i < length; i++) {
+                let a = getRandom(0, brownEasy.length - 1);
+                brownNeeded.push(brownEasy[a]);
+                brownEasy.splice(a, 1);
+            }
+
+            for (let i = 0; i < dep; i++) {
+                let a = getRandom(0, brownNormal.length - 1);
+                brownNeeded.push(brownNormal[a]);
+                brownNormal.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].firstStage.brownCards; i++) {
+                let a = getRandom(0, brownNeeded.length - 1);
+                firstStage.push(brownNeeded[a]);
+                brownNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].secondStage.brownCards; i++) {
+                let a = getRandom(0, brownNeeded.length - 1);
+                secondStage.push(brownNeeded[a]);
+                brownNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].thirdStage.brownCards; i++) {
+                let a = getRandom(0, brownNeeded.length - 1);
+                thirdStage.push(brownNeeded[a]);
+                brownNeeded.splice(a, 1);
+            }
+        }
+
+        if (AmountblueCards <= blueEasy.length) {
+            const length = AmountblueCards;
+
+            for (let i = 0; i < length; i++) {
+                let a = getRandom(0, brownNeeded.length - 1);
+                blueNeeded.push(blueEasy[a]);
+                blueEasy.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].firstStage.blueCards; i++) {
+                let a = getRandom(0, blueNeeded.length - 1);
+                firstStage.push(blueNeeded[a]);
+                blueNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].secondStage.blueCards; i++) {
+                let a = getRandom(0, blueNeeded.length - 1);
+                secondStage.push(blueNeeded[a]);
+                blueNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].thirdStage.blueCards; i++) {
+                let a = getRandom(0, blueNeeded.length - 1);
+                thirdStage.push(blueNeeded[a]);
+                blueNeeded.splice(a, 1);
+            }
+
+
+        } else {
+            const length = AmountblueCards;
+            const dep = AmountblueCards - blueEasy.length;
+
+            for (let i = 0; i < length; i++) {
+                let a = getRandom(0, brownNeeded.length - 1);
+                blueNeeded.push(blueEasy[a]);
+                blueEasy.splice(a, 1);
+            }
+
+            for (let i = 0; i < dep; i++) {
+                let a = getRandom(0, brownNeeded.length - 1);
+                blueNeeded.push(blueNormal[a]);
+                blueNormal.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].firstStage.blueCards; i++) {
+                let a = getRandom(0, blueNeeded.length - 1);
+                firstStage.push(blueNeeded[a]);
+                blueNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].secondStage.blueCards; i++) {
+                let a = getRandom(0, blueNeeded.length - 1);
+                secondStage.push(blueNeeded[a]);
+                blueNeeded.splice(a, 1);
+            }
+
+            for (let i = 0; i < ancientsData[ancientId].thirdStage.blueCards; i++) {
+                let a = getRandom(0, blueNeeded.length - 1);
+                thirdStage.push(blueNeeded[a]);
+                blueNeeded.splice(a, 1);
+            }
+
+        }
+
+        // //split on stages
+
+        console.log(firstStage);
+        console.log(secondStage);
+        console.log(thirdStage);
+
+
+        console.log(stage_text);
+
+        deck.addEventListener('click', () => {
+            const img = new Image();
+
+            if (firstStage.length != 0) {
+                let i = getRandom(0, firstStage.length - 1);
+
+                img.src = `../assets/MythicCards/${firstStage[i].slice(0, firstStage[i].length - 2)}/${firstStage[i]}.png`;
+                console.log(img);
+                img.onload = () => {
+                    lastCard.style.backgroundImage = `url(${img.src})`;
+                }
+                firstStage.splice(i, 1);
+            } else if (secondStage.length != 0) {
+                stage_text[0].classList.add('done');
+
+                let i = getRandom(0, secondStage.length - 1);
+
+                img.src = `../assets/MythicCards/${secondStage[i].slice(0, secondStage[i].length - 2)}/${secondStage[i]}.png`;
+                console.log(img);
+                img.onload = () => {
+                    lastCard.style.backgroundImage = `url(${img.src})`;
+                }
+                secondStage.splice(i, 1);
+            }
+            else if (thirdStage.length != 0) {
+                stage_text[1].classList.add('done');
+
+                let i = getRandom(0, thirdStage.length - 1);
+
+                img.src = `../assets/MythicCards/${thirdStage[i].slice(0, thirdStage[i].length - 2)}/${thirdStage[i]}.png`;
+                console.log(img);
+                img.onload = () => {
+                    lastCard.style.backgroundImage = `url(${img.src})`;
+                }
+                thirdStage.splice(i, 1);
+            }
+            else {
+                stage_text[2].classList.add('done');
+                deck.classList.add('hidden');
+            }
+
+
+
+        });
+    }
+
+    function levelNormal() {
+        console.log("Level Normal");
+    }
+
+    function levelHard() {
+        console.log("Level Hard");
+    }
+
+    if (levelId == 0) {
+        levelEasy();
+    } else if (levelId == 1) {
+        levelNormal();
+    } else if (levelId == 2) {
+        levelHard();
+    }
+
+
+
+
+
 });
 
