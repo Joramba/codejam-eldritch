@@ -61,17 +61,11 @@ shuffleButton.addEventListener('click', () => {
     const AmountblueCards = ancientsData[ancientId].firstStage.blueCards + ancientsData[ancientId].secondStage.blueCards + ancientsData[ancientId].thirdStage.blueCards;
     const AmountbrownCards = ancientsData[ancientId].firstStage.brownCards + ancientsData[ancientId].secondStage.brownCards + ancientsData[ancientId].thirdStage.brownCards;
 
-
-    // console.log(AmountgreenCards);
-    // console.log(AmountbrownCards);
-    // console.log(AmountblueCards);
-
-
     deckContainer.innerHTML = `
         <div class="current-state">
-            <div class="stage-container">
+            <div class="stage-container ">
                 <span class="stage-text">First Stage</span>
-                <div class="dot-container">
+                <div class="dot-container first">
                     <div class="dot green">${ancientsData[ancientId].firstStage.greenCards}</div>
                     <div class="dot brown">${ancientsData[ancientId].firstStage.brownCards}</div>
                     <div class="dot blue">${ancientsData[ancientId].firstStage.blueCards}</div>
@@ -79,7 +73,7 @@ shuffleButton.addEventListener('click', () => {
             </div>
             <div class="stage-container">
                 <span class="stage-text">Second Stage</span>
-                <div class="dot-container">
+                <div class="dot-container second">
                 <div class="dot green">${ancientsData[ancientId].secondStage.greenCards}</div>
                 <div class="dot brown">${ancientsData[ancientId].secondStage.brownCards}</div>
                 <div class="dot blue">${ancientsData[ancientId].secondStage.blueCards}</div>
@@ -87,7 +81,7 @@ shuffleButton.addEventListener('click', () => {
             </div>
             <div class="stage-container">
                 <span class="stage-text">Third Stage</span>
-                <div class="dot-container">
+                <div class="dot-container third">
                 <div class="dot green">${ancientsData[ancientId].thirdStage.greenCards}</div>
                 <div class="dot brown">${ancientsData[ancientId].thirdStage.brownCards}</div>
                 <div class="dot blue">${ancientsData[ancientId].thirdStage.blueCards}</div>
@@ -101,6 +95,11 @@ shuffleButton.addEventListener('click', () => {
     const deck = document.querySelector('.deck');
     const lastCard = document.querySelector('.last-card');
     const stage_text = document.querySelectorAll('.stage-text');
+
+    const firstContainer = document.querySelector('.first');
+    const secondContainer = document.querySelector('.second');
+    const thirdContainer = document.querySelector('.third');
+
 
     function levelEasy() {
         console.log("Level easy");
@@ -369,7 +368,23 @@ shuffleButton.addEventListener('click', () => {
                 img.onload = () => {
                     lastCard.style.backgroundImage = `url(${img.src})`;
                 }
+
+                if (firstStage[i].slice(0, firstStage[i].length - 2) == 'green') {
+                    firstContainer.querySelector('.green').textContent = ancientsData[ancientId].firstStage.greenCards - 1;
+                    ancientsData[ancientId].firstStage.greenCards--;
+                } else if (firstStage[i].slice(0, firstStage[i].length - 2) == 'brown') {
+                    firstContainer.querySelector('.brown').textContent = ancientsData[ancientId].firstStage.brownCards - 1;
+                    ancientsData[ancientId].firstStage.brownCards--;
+                }
+                else if (firstStage[i].slice(0, firstStage[i].length - 2) == 'blue') {
+                    firstContainer.querySelector('.blue').textContent = ancientsData[ancientId].firstStage.blueCards - 1;
+                    ancientsData[ancientId].firstStage.blueCards--;
+                }
+
                 firstStage.splice(i, 1);
+
+
+
             } else if (secondStage.length != 0) {
                 stage_text[0].classList.add('done');
 
@@ -380,6 +395,19 @@ shuffleButton.addEventListener('click', () => {
                 img.onload = () => {
                     lastCard.style.backgroundImage = `url(${img.src})`;
                 }
+
+                if (secondStage[i].slice(0, secondStage[i].length - 2) == 'green') {
+                    secondContainer.querySelector('.green').textContent = ancientsData[ancientId].secondStage.greenCards - 1;
+                    ancientsData[ancientId].secondStage.greenCards--;
+                } else if (secondStage[i].slice(0, secondStage[i].length - 2) == 'brown') {
+                    secondContainer.querySelector('.brown').textContent = ancientsData[ancientId].secondStage.brownCards - 1;
+                    ancientsData[ancientId].secondStage.brownCards--;
+                }
+                else if (secondStage[i].slice(0, secondStage[i].length - 2) == 'blue') {
+                    secondContainer.querySelector('.blue').textContent = ancientsData[ancientId].secondStage.blueCards - 1;
+                    ancientsData[ancientId].secondStage.blueCards--;
+                }
+
                 secondStage.splice(i, 1);
             }
             else if (thirdStage.length != 0) {
@@ -392,15 +420,26 @@ shuffleButton.addEventListener('click', () => {
                 img.onload = () => {
                     lastCard.style.backgroundImage = `url(${img.src})`;
                 }
+
+                if (thirdStage[i].slice(0, thirdStage[i].length - 2) == 'green') {
+                    thirdContainer.querySelector('.green').textContent = ancientsData[ancientId].thirdStage.greenCards - 1;
+                    ancientsData[ancientId].thirdStage.greenCards--;
+                } else if (thirdStage[i].slice(0, thirdStage[i].length - 2) == 'brown') {
+                    thirdContainer.querySelector('.brown').textContent = ancientsData[ancientId].thirdStage.brownCards - 1;
+                    ancientsData[ancientId].thirdStage.brownCards--;
+                }
+                else if (thirdStage[i].slice(0, thirdStage[i].length - 2) == 'blue') {
+                    thirdContainer.querySelector('.blue').textContent = ancientsData[ancientId].thirdStage.blueCards - 1;
+                    ancientsData[ancientId].thirdStage.blueCards--;
+                }
+
                 thirdStage.splice(i, 1);
+
+                if (thirdStage.length == 0) {
+                    stage_text[2].classList.add('done');
+                    deck.classList.add('hidden');
+                }
             }
-            else {
-                stage_text[2].classList.add('done');
-                deck.classList.add('hidden');
-            }
-
-
-
         });
     }
 
@@ -419,9 +458,6 @@ shuffleButton.addEventListener('click', () => {
     } else if (levelId == 2) {
         levelHard();
     }
-
-
-
 
 
 });
