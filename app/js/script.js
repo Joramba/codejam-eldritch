@@ -364,7 +364,9 @@ shuffleButton.addEventListener('click', () => {
                 let i = getRandom(0, firstStage.length - 1);
 
                 img.src = `../assets/MythicCards/${firstStage[i].slice(0, firstStage[i].length - 2)}/${firstStage[i]}.png`;
+
                 console.log(img);
+
                 img.onload = () => {
                     lastCard.style.backgroundImage = `url(${img.src})`;
                 }
@@ -382,8 +384,6 @@ shuffleButton.addEventListener('click', () => {
                 }
 
                 firstStage.splice(i, 1);
-
-
 
             } else if (secondStage.length != 0) {
                 stage_text[0].classList.add('done');
@@ -415,7 +415,7 @@ shuffleButton.addEventListener('click', () => {
 
                 let i = getRandom(0, thirdStage.length - 1);
 
-                img.src = `../assets/MythicCards/${thirdStage[i].slice(0, thirdStage[i].length - 2)}/${thirdStage[i]}.png`;
+                img.src = `../../assets/MythicCards/${thirdStage[i].slice(0, thirdStage[i].length - 2)}/${thirdStage[i]}.png`;
                 console.log(img);
                 img.onload = () => {
                     lastCard.style.backgroundImage = `url(${img.src})`;
