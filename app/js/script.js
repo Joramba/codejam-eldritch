@@ -136,6 +136,14 @@ shuffleButton.addEventListener('click', () => {
     let cardsBrown = [];
     let cardsBlue = [];
 
+    let cardsEasyGreen = [];
+    let cardsEasyBrown = [];
+    let cardsEasyBlue = [];
+
+    let cardsHardGreen = [];
+    let cardsHardlBrown = [];
+    let cardsHardBlue = [];
+
     function cardsDataColor(array, easy, normal, hard) {
         array.forEach(item => {
             if (item.difficulty == 'easy') {
@@ -149,19 +157,45 @@ shuffleButton.addEventListener('click', () => {
         });
     }
 
-    function cardData(array, cards) {
+    function cardDataNormal(array, cards) {
         array.forEach(item => {
             cards.push(item.id);
         });
     }
 
+    function cardDataEasy(array, cards) {
+        array.forEach(item => {
+            if (item.difficulty !== 'hard') {
+                cards.push(item.id);
+            }
+        });
+    }
+
+    function cardDataHard(array, cards) {
+        array.forEach(item => {
+            if (item.difficulty !== 'easy') {
+                cards.push(item.id);
+            }
+        });
+    }
+
+
+
     cardsDataColor(cardsDataGreen, greenEasy, greenNormal, greenHard);
     cardsDataColor(cardsDataBrown, brownEasy, brownNormal, brownHard);
     cardsDataColor(cardsDataBlue, blueEasy, blueNormal, blueHard);
 
-    cardData(cardsDataGreen, cardsGreen);
-    cardData(cardsDataBrown, cardsBrown);
-    cardData(cardsDataBlue, cardsBlue);
+    cardDataNormal(cardsDataGreen, cardsGreen);
+    cardDataNormal(cardsDataBrown, cardsBrown);
+    cardDataNormal(cardsDataBlue, cardsBlue);
+
+    cardDataEasy(cardsDataGreen, cardsEasyGreen);
+    cardDataEasy(cardsDataBrown, cardsEasyBrown);
+    cardDataEasy(cardsDataBlue, cardsEasyBlue);
+
+    cardDataHard(cardsDataGreen, cardsHardGreen);
+    cardDataHard(cardsDataBrown, cardsHardlBrown);
+    cardDataHard(cardsDataBlue, cardsHardBlue);
 
 
     function setStages(amount, easy, normal, needed, first, second, third) {
@@ -341,12 +375,24 @@ shuffleButton.addEventListener('click', () => {
         }
     }
 
-    function levelEasy() {
-        console.log("Level easy");
+    function levelVeryEasy() {
+        console.log("Level very easy");
 
         setStages(AmountgreenCards, greenEasy, greenNormal, greenNeeded, firstGreen, secondGreen, thirdGreen);
         setStages(AmountbrownCards, brownEasy, brownNormal, brownNeeded, firstBrown, secondBrown, thirdBrown);
         setStages(AmountblueCards, blueEasy, blueNormal, blueNeeded, firstBlue, secondBlue, thirdBlue);
+
+        deck.addEventListener('click', () => {
+            setImages();
+        });
+    }
+
+    function levelEasy() {
+        console.log("Level easy");
+
+        setStageNormal(AmountgreenCards, cardsEasyGreen, greenNeeded, firstGreen, secondGreen, thirdGreen);
+        setStageNormal(AmountbrownCards, cardsEasyBrown, brownNeeded, firstBrown, secondBrown, thirdBrown);
+        setStageNormal(AmountblueCards, cardsEasyBlue, blueNeeded, firstBlue, secondBlue, thirdBlue);
 
         deck.addEventListener('click', () => {
             setImages();
@@ -366,7 +412,19 @@ shuffleButton.addEventListener('click', () => {
     }
 
     function levelHard() {
-        console.log("Level Hard");
+        console.log("Level hard");
+
+        setStageNormal(AmountgreenCards, cardsHardGreen, greenNeeded, firstGreen, secondGreen, thirdGreen);
+        setStageNormal(AmountbrownCards, cardsHardlBrown, brownNeeded, firstBrown, secondBrown, thirdBrown);
+        setStageNormal(AmountblueCards, cardsHardBlue, blueNeeded, firstBlue, secondBlue, thirdBlue);
+
+        deck.addEventListener('click', () => {
+            setImages();
+        });
+    }
+
+    function levelVeryHard() {
+        console.log("Level very Hard");
 
         setStages(AmountgreenCards, greenHard, greenNormal, greenNeeded, firstGreen, secondGreen, thirdGreen);
         setStages(AmountbrownCards, brownHard, brownNormal, brownNeeded, firstBrown, secondBrown, thirdBrown);
@@ -378,11 +436,21 @@ shuffleButton.addEventListener('click', () => {
     }
 
 
-    if (levelId == 0) {
-        levelEasy();
-    } else if (levelId == 1) {
-        levelNormal();
-    } else if (levelId == 2) {
-        levelHard();
+    switch (levelId) {
+        case 0:
+            levelVeryEasy();
+            break;
+        case 1:
+            levelEasy();
+            break;
+        case 2:
+            levelNormal();
+            break;
+        case 3:
+            levelHard();
+            break;
+        case 4:
+            levelVeryHard();
+            break;
     }
 });
