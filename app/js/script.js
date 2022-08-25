@@ -20,7 +20,6 @@ function showButton() {
     }
 }
 
-
 function getRandom(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -112,37 +111,30 @@ shuffleButton.addEventListener('click', () => {
         secondContainer = document.querySelector('.second'),
         thirdContainer = document.querySelector('.third');
 
-    let firstStage = [];
-    let secondStage = [];
-    let thirdStage = [];
+    let firstStage = [],
+        secondStage = [],
+        thirdStage = [];
 
-    let greenEasy = [];
-    let greenNormal = [];
-    let greenHard = [];
+    let greenEasy = [],
+        greenNormal = [],
+        greenHard = [];
 
-    let brownEasy = [];
-    let brownNormal = [];
-    let brownHard = [];
+    let brownEasy = [],
+        brownNormal = [],
+        brownHard = [];
 
-    let blueEasy = [];
-    let blueNormal = [];
-    let blueHard = [];
+    let blueEasy = [],
+        blueNormal = [],
+        blueHard = [];
 
-    let greenNeeded = [];
-    let brownNeeded = [];
-    let blueNeeded = [];
+    let greenNeeded = [],
+        brownNeeded = [],
+        blueNeeded = [];
 
-    let cardsGreen = [];
-    let cardsBrown = [];
-    let cardsBlue = [];
+    let cardsGreen = [],
+        cardsBrown = [],
+        cardsBlue = [];
 
-    let cardsEasyGreen = [];
-    let cardsEasyBrown = [];
-    let cardsEasyBlue = [];
-
-    let cardsHardGreen = [];
-    let cardsHardlBrown = [];
-    let cardsHardBlue = [];
 
     function cardsDataColor(array, easy, normal, hard) {
         array.forEach(item => {
@@ -178,25 +170,6 @@ shuffleButton.addEventListener('click', () => {
             }
         });
     }
-
-
-
-    cardsDataColor(cardsDataGreen, greenEasy, greenNormal, greenHard);
-    cardsDataColor(cardsDataBrown, brownEasy, brownNormal, brownHard);
-    cardsDataColor(cardsDataBlue, blueEasy, blueNormal, blueHard);
-
-    cardDataNormal(cardsDataGreen, cardsGreen);
-    cardDataNormal(cardsDataBrown, cardsBrown);
-    cardDataNormal(cardsDataBlue, cardsBlue);
-
-    cardDataEasy(cardsDataGreen, cardsEasyGreen);
-    cardDataEasy(cardsDataBrown, cardsEasyBrown);
-    cardDataEasy(cardsDataBlue, cardsEasyBlue);
-
-    cardDataHard(cardsDataGreen, cardsHardGreen);
-    cardDataHard(cardsDataBrown, cardsHardlBrown);
-    cardDataHard(cardsDataBlue, cardsHardBlue);
-
 
     function setStages(amount, easy, normal, needed, first, second, third) {
         if (amount <= greenEasy.length) {
@@ -264,7 +237,7 @@ shuffleButton.addEventListener('click', () => {
         }
     }
 
-    function setStageNormal(amount, cards, needed, first, second, third) {
+    function setStagesNormal(amount, cards, needed, first, second, third) {
         let a;
 
         for (let i = 0; i < amount; i++) {
@@ -378,6 +351,10 @@ shuffleButton.addEventListener('click', () => {
     function levelVeryEasy() {
         console.log("Level very easy");
 
+        cardsDataColor(cardsDataGreen, greenEasy, greenNormal, greenHard);
+        cardsDataColor(cardsDataBrown, brownEasy, brownNormal, brownHard);
+        cardsDataColor(cardsDataBlue, blueEasy, blueNormal, blueHard);
+
         setStages(AmountgreenCards, greenEasy, greenNormal, greenNeeded, firstGreen, secondGreen, thirdGreen);
         setStages(AmountbrownCards, brownEasy, brownNormal, brownNeeded, firstBrown, secondBrown, thirdBrown);
         setStages(AmountblueCards, blueEasy, blueNormal, blueNeeded, firstBlue, secondBlue, thirdBlue);
@@ -390,9 +367,13 @@ shuffleButton.addEventListener('click', () => {
     function levelEasy() {
         console.log("Level easy");
 
-        setStageNormal(AmountgreenCards, cardsEasyGreen, greenNeeded, firstGreen, secondGreen, thirdGreen);
-        setStageNormal(AmountbrownCards, cardsEasyBrown, brownNeeded, firstBrown, secondBrown, thirdBrown);
-        setStageNormal(AmountblueCards, cardsEasyBlue, blueNeeded, firstBlue, secondBlue, thirdBlue);
+        cardDataEasy(cardsDataGreen, cardsGreen);
+        cardDataEasy(cardsDataBrown, cardsBrown);
+        cardDataEasy(cardsDataBlue, cardsBlue);
+
+        setStagesNormal(AmountgreenCards, cardsGreen, greenNeeded, firstGreen, secondGreen, thirdGreen);
+        setStagesNormal(AmountbrownCards, cardsBrown, brownNeeded, firstBrown, secondBrown, thirdBrown);
+        setStagesNormal(AmountblueCards, cardsBlue, blueNeeded, firstBlue, secondBlue, thirdBlue);
 
         deck.addEventListener('click', () => {
             setImages();
@@ -402,21 +383,29 @@ shuffleButton.addEventListener('click', () => {
     function levelNormal() {
         console.log("Level Normal");
 
-        setStageNormal(AmountgreenCards, cardsGreen, greenNeeded, firstGreen, secondGreen, thirdGreen);
-        setStageNormal(AmountbrownCards, cardsBrown, brownNeeded, firstBrown, secondBrown, thirdBrown);
-        setStageNormal(AmountblueCards, cardsBlue, blueNeeded, firstBlue, secondBlue, thirdBlue);
+        cardDataNormal(cardsDataGreen, cardsGreen);
+        cardDataNormal(cardsDataBrown, cardsBrown);
+        cardDataNormal(cardsDataBlue, cardsBlue);
+
+        setStagesNormal(AmountgreenCards, cardsGreen, greenNeeded, firstGreen, secondGreen, thirdGreen);
+        setStagesNormal(AmountbrownCards, cardsBrown, brownNeeded, firstBrown, secondBrown, thirdBrown);
+        setStagesNormal(AmountblueCards, cardsBlue, blueNeeded, firstBlue, secondBlue, thirdBlue);
 
         deck.addEventListener('click', () => {
             setImages();
         });
     }
 
-    function levelHard() {
+    function levelHard() {  
         console.log("Level hard");
 
-        setStageNormal(AmountgreenCards, cardsHardGreen, greenNeeded, firstGreen, secondGreen, thirdGreen);
-        setStageNormal(AmountbrownCards, cardsHardlBrown, brownNeeded, firstBrown, secondBrown, thirdBrown);
-        setStageNormal(AmountblueCards, cardsHardBlue, blueNeeded, firstBlue, secondBlue, thirdBlue);
+        cardDataHard(cardsDataGreen, cardsGreen);
+        cardDataHard(cardsDataBrown, cardsBrown);
+        cardDataHard(cardsDataBlue, cardsBlue);
+
+        setStagesNormal(AmountgreenCards, cardsGreen, greenNeeded, firstGreen, secondGreen, thirdGreen);
+        setStagesNormal(AmountbrownCards, cardsBrown, brownNeeded, firstBrown, secondBrown, thirdBrown);
+        setStagesNormal(AmountblueCards, cardsBlue, blueNeeded, firstBlue, secondBlue, thirdBlue);
 
         deck.addEventListener('click', () => {
             setImages();
@@ -425,6 +414,10 @@ shuffleButton.addEventListener('click', () => {
 
     function levelVeryHard() {
         console.log("Level very Hard");
+
+        cardsDataColor(cardsDataGreen, greenEasy, greenNormal, greenHard);
+        cardsDataColor(cardsDataBrown, brownEasy, brownNormal, brownHard);
+        cardsDataColor(cardsDataBlue, blueEasy, blueNormal, blueHard);
 
         setStages(AmountgreenCards, greenHard, greenNormal, greenNeeded, firstGreen, secondGreen, thirdGreen);
         setStages(AmountbrownCards, brownHard, brownNormal, brownNeeded, firstBrown, secondBrown, thirdBrown);
