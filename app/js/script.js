@@ -147,6 +147,7 @@ shuffleButton.addEventListener('click', () => {
     cardsDataColor(cardsDataBrown, brownEasy, brownNormal, brownHard);
     cardsDataColor(cardsDataBlue, blueEasy, blueNormal, blueHard);
 
+
     function setStages(amount, easy, normal, needed, first, second, third) {
         if (amount <= greenEasy.length) {
             let a;
@@ -213,47 +214,26 @@ shuffleButton.addEventListener('click', () => {
         }
     }
 
+
+    let greenNeeded = [];
+    let brownNeeded = [];
+    let blueNeeded = [];
+
+    function loadImage(img, stage, i) {
+        img.src = `./assets/MythicCards/${stage[i].slice(0, stage[i].length - 2)}/${stage[i]}.png`;
+        console.log(img.src);
+
+        img.onload = () => {
+            lastCard.style.backgroundImage = `url(${img.src})`;
+        }
+    }
+
     function levelEasy() {
         console.log("Level easy");
-
-        let greenNeeded = [];
-        let brownNeeded = [];
-        let blueNeeded = [];
 
         setStages(AmountgreenCards, greenEasy, greenNormal, greenNeeded, firstGreen, secondGreen, thirdGreen);
         setStages(AmountbrownCards, brownEasy, brownNormal, brownNeeded, firstBrown, secondBrown, thirdBrown);
         setStages(AmountblueCards, blueEasy, blueNormal, blueNeeded, firstBlue, secondBlue, thirdBlue);
-
-        console.log("First Stage: " + firstStage);
-        console.log("Second Stage: " + secondStage);
-        console.log("Third Stage: " + thirdStage);
-
-        function loadImage(img, stage, i, green, brown, blue, container) {
-            img.src = `./assets/MythicCards/${stage[i].slice(0, stage[i].length - 2)}/${stage[i]}.png`;
-            console.log(img.src);
-
-            img.onload = () => {
-                lastCard.style.backgroundImage = `url(${img.src})`;
-            }
-
-            // if (stage[i].slice(0, stage[i].length - 2) == 'green') {
-            //     container.querySelector('.green').textContent = green - 1;
-            //     green--;
-            // } else if (stage[i].slice(0, stage[i].length - 2) == 'brown') {
-            //     container.querySelector('.brown').textContent = brown - 1;
-            //     brown--;
-            // }
-            // else if (stage[i].slice(0, stage[i].length - 2) == 'blue') {
-            //     container.querySelector('.blue').textContent = blue - 1;
-            //     blue--;
-            // }
-
-            // stage.splice(i, 1);
-
-            // console.log(green, brown, blue);
-
-            // return [green, brown, blue];
-        }
 
         deck.addEventListener('click', () => {
             const img = new Image();
@@ -262,8 +242,7 @@ shuffleButton.addEventListener('click', () => {
                 let i = getRandom(0, firstStage.length - 1);
 
                 console.log(firstGreen, firstBrown, firstBlue)
-                loadImage(img, firstStage, i, firstGreen, firstBrown, firstBlue, firstContainer);
-
+                loadImage(img, firstStage, i);
 
                 if (firstStage[i].slice(0, firstStage[i].length - 2) == 'green') {
                     firstContainer.querySelector('.green').textContent = firstGreen - 1;
@@ -285,7 +264,7 @@ shuffleButton.addEventListener('click', () => {
 
             } else if (secondStage.length != 0) {
                 let i = getRandom(0, secondStage.length - 1);
-                loadImage(img, secondStage, i, secondGreen, secondBrown, secondBlue, secondContainer);
+                loadImage(img, secondStage, i);
 
 
                 if (secondStage[i].slice(0, secondStage[i].length - 2) == 'green') {
@@ -305,12 +284,11 @@ shuffleButton.addEventListener('click', () => {
                 if (secondStage.length == 0) {
                     stage_text[1].classList.add('done');
                 }
-
             }
             else if (thirdStage.length != 0) {
                 let i = getRandom(0, thirdStage.length - 1);
 
-                loadImage(img, thirdStage, i, thirdGreen, thirdBrown, thirdBlue, thirdContainer);
+                loadImage(img, thirdStage, i);
 
                 if (thirdStage[i].slice(0, thirdStage[i].length - 2) == 'green') {
                     thirdContainer.querySelector('.green').textContent = thirdGreen - 1;
@@ -336,11 +314,94 @@ shuffleButton.addEventListener('click', () => {
 
     function levelNormal() {
         console.log("Level Normal");
+
+
     }
 
     function levelHard() {
         console.log("Level Hard");
+
+        setStages(AmountgreenCards, greenHard, greenNormal, greenNeeded, firstGreen, secondGreen, thirdGreen);
+        setStages(AmountbrownCards, brownHard, brownNormal, brownNeeded, firstBrown, secondBrown, thirdBrown);
+        setStages(AmountblueCards, blueHard, blueNormal, blueNeeded, firstBlue, secondBlue, thirdBlue);
+
+        deck.addEventListener('click', () => {
+            const img = new Image();
+
+            if (firstStage.length != 0) {
+                let i = getRandom(0, firstStage.length - 1);
+
+                console.log(firstGreen, firstBrown, firstBlue)
+                loadImage(img, firstStage, i);
+
+                if (firstStage[i].slice(0, firstStage[i].length - 2) == 'green') {
+                    firstContainer.querySelector('.green').textContent = firstGreen - 1;
+                    firstGreen--;
+                } else if (firstStage[i].slice(0, firstStage[i].length - 2) == 'brown') {
+                    firstContainer.querySelector('.brown').textContent = firstBrown - 1;
+                    firstBrown--;
+                }
+                else if (firstStage[i].slice(0, firstStage[i].length - 2) == 'blue') {
+                    firstContainer.querySelector('.blue').textContent = firstBlue - 1;
+                    firstBlue--;
+                }
+
+                firstStage.splice(i, 1);
+
+                if (firstStage.length == 0) {
+                    stage_text[0].classList.add('done');
+                }
+
+            } else if (secondStage.length != 0) {
+                let i = getRandom(0, secondStage.length - 1);
+                loadImage(img, secondStage, i);
+
+
+                if (secondStage[i].slice(0, secondStage[i].length - 2) == 'green') {
+                    secondContainer.querySelector('.green').textContent = secondGreen - 1;
+                    secondGreen--;
+                } else if (secondStage[i].slice(0, secondStage[i].length - 2) == 'brown') {
+                    secondContainer.querySelector('.brown').textContent = secondBrown - 1;
+                    secondBrown--;
+                }
+                else if (secondStage[i].slice(0, secondStage[i].length - 2) == 'blue') {
+                    secondContainer.querySelector('.blue').textContent = secondBlue - 1;
+                    secondBlue--;
+                }
+
+                secondStage.splice(i, 1);
+
+                if (secondStage.length == 0) {
+                    stage_text[1].classList.add('done');
+                }
+            }
+            else if (thirdStage.length != 0) {
+                let i = getRandom(0, thirdStage.length - 1);
+
+                loadImage(img, thirdStage, i);
+
+                if (thirdStage[i].slice(0, thirdStage[i].length - 2) == 'green') {
+                    thirdContainer.querySelector('.green').textContent = thirdGreen - 1;
+                    thirdGreen--;
+                } else if (thirdStage[i].slice(0, thirdStage[i].length - 2) == 'brown') {
+                    thirdContainer.querySelector('.brown').textContent = thirdBrown - 1;
+                    thirdBrown--;
+                }
+                else if (thirdStage[i].slice(0, thirdStage[i].length - 2) == 'blue') {
+                    thirdContainer.querySelector('.blue').textContent = thirdBlue - 1;
+                    thirdBlue--;
+                }
+
+                thirdStage.splice(i, 1);
+
+                if (thirdStage.length == 0) {
+                    stage_text[2].classList.add('done');
+                    deck.classList.add('hidden');
+                }
+            }
+        });
     }
+
 
     if (levelId == 0) {
         levelEasy();
